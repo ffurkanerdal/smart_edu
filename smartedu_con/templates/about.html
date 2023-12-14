@@ -1,0 +1,127 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+
+
+    <div class="all-title-box" style="background-image: url({{banner.image.url}});">
+        <div class="container text-center">
+            <h1>{{pageName}}</h1>
+        </div>
+    </div>
+
+    <div id="overviews" class="section lb">
+        <div class="container">
+            <div class="section-title row text-center">
+                <div class="col-md-8 offset-md-2">
+                    <h3>{{pageName}}</h3>
+                    <p class="lead">{{pageText}}</p>
+                </div>
+            </div><!-- end title -->
+
+            {% for content in contents %}
+
+            <div class="row align-items-center">
+
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                    <div class="message-box">
+                        <h4>{{content.subheader}}</h4>
+                        <h2>{{content.header}}</h2>
+                        <p>{{content.text}}</p>
+
+                        <!-- <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis montes, nascetur ridiculus mus. Sed vitae rutrum neque. </p> -->
+
+                        <a href="#" class="hover-btn-new orange"><span>Learn More</span></a>
+                    </div><!-- end messagebox -->
+                </div><!-- end col -->
+
+				<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                    <div class="post-media wow fadeIn">
+                        <img src="{{content.image.url}}" alt="" class="img-fluid img-rounded">
+                    </div><!-- end media -->
+                </div><!-- end col -->
+			</div>
+
+            {% endfor %}
+
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+	<div class="hmv-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6 col-12">
+					<div class="inner-hmv">
+						<div class="icon-box-hmv"><i class="flaticon-achievement"></i></div>
+						<h3>{{mission.name}}</h3>
+						<div class="tr-pa">M</div>
+						<p>{{mission.text}}</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 col-12">
+					<div class="inner-hmv">
+						<div class="icon-box-hmv"><i class="flaticon-eye"></i></div>
+						<h3>{{vision.name}}</h3>
+						<div class="tr-pa">V</div>
+						<p>{{vision.text}}</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 col-12">
+					<div class="inner-hmv">
+						<div class="icon-box-hmv"><i class="flaticon-history"></i></div>
+						<h3>{{history.name}}</h3>
+						<div class="tr-pa">H</div>
+						<p>{{history.text}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div id="testimonials" class="parallax section db parallax-off" style="background-image:url('{{testiBanner.image.url}}');">
+        <div class="container">
+            <div class="section-title text-center">
+                <h3>Testimonials</h3>
+                <p>Lorem ipsum dolor sit aet, consectetur adipisicing lit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            </div><!-- end title -->
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="testi-carousel owl-carousel owl-theme">
+                        {% for testi in testimonials %}
+                        <div class="testimonial clearfix">
+							<div class="testi-meta">
+                                <img src="{{testi.image.url}}" alt="" class="img-fluid">
+                                <h4>{{testi.author}}</h4>
+                            </div>
+                            <div class="desc">
+                                <h3><i class="fa fa-quote-left"></i> {{testi.header}}</h3>
+                                <p class="lead">{{testi.text}}</p>
+                            </div>
+                            <!-- end testi-meta -->
+                        </div>
+                        {% endfor %}
+                        <!-- end testimonial -->
+
+
+                    </div><!-- end carousel -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+    <div class="parallax section dbcolor">
+        <div class="container">
+            <div class="row logos">
+                {% for ref in referencess %}
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="{{ref.image.url}}" alt="" class="img-repsonsive"></a>
+                </div>
+                {% endfor %}
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+ {% endblock %}

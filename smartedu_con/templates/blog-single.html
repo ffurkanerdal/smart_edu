@@ -1,0 +1,139 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+
+{% block title %}Blog Single{% endblock %}
+
+{% block content %}
+
+	<div class="all-title-box" style="background-image: url({{blog.image.url}});">
+		<div class="container text-center">
+			<h1>{{blog.header}}</h1>
+		</div>
+	</div>
+	
+    <div id="overviews" class="section wb">
+        <div class="container">
+            <div class="row"> 
+                <div class="col-lg-9 blog-post-single">
+                    <div class="blog-item">
+						<div class="image-blog">
+							<img src="{{blog.image.url}}" alt="" class="img-fluid">
+						</div>
+						<div class="post-content">
+							<div class="meta-info-blog">
+								<span><i class="fa fa-calendar"></i> <a href="#">{{blog.date}}</a> </span>
+								<span><i class="fa fa-tag"></i><a href="{% url 'blogs_by_category' category_slug=blog.category.slug %}">{{blog.category}}</a></span>
+								<span><i class="fa fa-comments"></i> <a href="#">{{comments_len}}</a></span>
+							</div>
+							<div class="blog-desc">								
+								{{blog.text|safe}}
+
+							</div>							
+						</div>
+					</div>
+					
+					<div class="blog-comments">
+						<h4>Comments ({{comments_len}})</h4>
+						<div id="comment-blog">
+							<ul class="comment-list">
+								{% for com in comments %}
+								<li class="comment">
+									<div class="comment-container">
+										<h5 class="comment-author"><a href="#">{{com.author}}</a></h5>
+										<div class="comment-meta">
+											<a href="#" class="comment-date link-style1">{{com.date}}</a>
+										</div>
+										<div class="comment-body">
+											<p>{{com.text}}</p>
+										</div>
+									</div>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+					<div class="comments-form">
+						<h4>Leave a comment</h4>
+						<div class="comment-form-main">
+
+							{% if messages %}
+								{% for message in messages %}
+								<div class="alert alert{{message.tags}}">{{message}}</div>
+								{% endfor %}
+							{% endif %}
+							<div id="message"></div>
+							<form action="" method="POST">
+								{% csrf_token %}
+
+								<div class="row">
+									
+									<div class="col-md-12">
+										<div class="form-group">
+											{{comment_form.message}}
+										</div>
+											<input type="hidden" name="author" value="{{current_user.first_name}}" id="">
+											<input type="hidden" name="username" value="{{current_user.username}}" id="">
+											<input type="hidden" name="email" value="{{current_user.email}}" id="">
+<!-- 											
+											{{comment_form.author}}
+											{{comment_form.username}}
+											{{comment_form.email}} -->
+									</div>
+									<div class="col-md-12 post-btn">
+										<button type="submit" class="hover-btn-new orange"><span>Post Comment</span></button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						
+					</div>
+					
+                </div><!-- end col -->
+				<div class="col-lg-3 col-12 right-single">
+					<div class="widget-search">
+						<div class="site-search-area">
+							<form method="get" id="site-searchform" action="#">
+								<div>
+									<input class="input-text form-control" name="search-k" id="search-k" placeholder="Search keywords..." type="text">
+									<input id="searchsubmit" value="Search" type="submit">
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="widget-categories">
+						<h3 class="widget-title">Categories</h3>
+						<ul>
+							{% for cate in categories %}
+							<li><a href="{% url 'blogs_by_category' category_slug=cate.slug %}">{{cate.name}}</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="widget-tags">
+						<h3 class="widget-title">Search Tags</h3>
+						<ul class="tags">
+							{% for tag in tags %}
+							<li><a href="{% url 'blogs_by_tags' tag_slug=tag.slug %}">{{tag.name}}</a></li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+    <div class="parallax section dbcolor">
+        <div class="container">
+			<h2 class="text-light">Other Blogs In The {{blog.category}} Category;</h2>
+            <div class="row mt-4">
+				{% for cate_blog in cate_blogs %}
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="{% url 'blog_detail' cate_blog.category.slug cate_blog.id %}"><img src="{{cate_blog.image.url}}" alt="" class="img-repsonsive" style="object-fit: cover; height: 100px;"></a>
+                </div>
+				{% endfor %}
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+	
+{% endblock %}

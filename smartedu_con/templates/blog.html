@@ -1,0 +1,130 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+
+{% block title %}Blogs{% endblock %}
+
+{% block content %}
+	
+
+
+
+<div class="all-title-box" style="background-image: url({{banner.image.url}});">
+	<div class="container text-center">
+		<h1>{{banner.name}}</h1>
+	</div>
+</div>
+
+<div id="overviews" class="section wb">
+	<div class="container">
+		<div class="row"> 
+			<div class="col-lg-9 blog-post-single">
+
+				
+				<div class="row"> 
+					{% for blog in blogs %}
+					<div class="col-lg-6 col-md-6 col-12 mb-5">
+						<div class="course-item">
+							<div class="image-blog">
+								<img src="{{blog.image.url}}" style="width: 400px;height: 200px;" alt="" class="img-fluid">
+							</div>
+							<div class="course-br">
+								<div class="course-title">
+								<h2><a href="{% url 'blog_detail' blog.category.slug blog.id %}" title="">{{blog.header}}</a></h2>
+								</div>
+								<div class="course-desc">
+									<p>{{blog.description|truncatechars:200}}</p>
+								</div>
+							</div>
+							<div class="course-meta-bot">
+								<ul>
+								<li><i class="fa fa-calendar"></i> <a href="#">{{blog.date}}</a> </li>
+								<li><i class="fa fa-comments"></i> <a href="#">{{comments_len}}</a></li>
+								<li><i class="fa fa-calendar" aria-hidden="true"></i> {{blog.date}}</li>
+								</ul>
+							</div>
+						</div>
+					</div><!-- end col -->
+					{% endfor %}
+	
+
+				</div><!-- end row -->
+
+
+				<div class="row">
+					<nav aria-label="Page navigation">
+						<ul class="pagination">
+							{% if blogs.has_previous %}
+								<li class="page-item">
+									<a class="page-link" href="?page=1" aria-label="First">
+										<span aria-hidden="true">&laquo;&laquo;</span>
+									</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="?page={{ blogs.previous_page_number }}" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+							{% endif %}
+			
+							<li class="page-item disabled">
+								<span class="page-link">Sayfa {{ blogs.number }} / {{ blogs.paginator.num_pages }}</span>
+							</li>
+			
+							{% if blogs.has_next %}
+								<li class="page-item">
+									<a class="page-link" href="?page={{ blogs.next_page_number }}" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="?page={{ blogs.paginator.num_pages }}" aria-label="Last">
+										<span aria-hidden="true">&raquo;&raquo;</span>
+									</a>
+								</li>
+							{% endif %}
+						</ul>
+					</nav>
+				</div>
+				
+
+
+				
+			</div><!-- end col -->
+			<div class="col-lg-3 col-12 right-single">
+				<div class="widget-search">
+					<div class="site-search-area">
+						<form method="get" id="site-searchform" action="{% url 'search' %}">
+							<div>
+								<input class="input-text form-control" name="search" placeholder="Search keywords..." type="text">
+								<input id="searchsubmit" value="Search" type="submit">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="widget-categories">
+					<h3 class="widget-title">Categories</h3>
+					<ul>
+						{% for cate in categories %}
+							<li><a href="{% url 'blogs_by_category' cate.slug %}">{{cate.name}}</a></li>
+						{% endfor %}</ul>
+				</div>
+				<div class="widget-tags">
+					<h3 class="widget-title">Search Tags</h3>
+					<ul class="tags">
+						{% for tag in tags %}
+						<li><a href="">{% if tag.slug in request.path %}<b>{{tag.name}}</b>{% else %}{{tag.name}}{% endif %}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div><!-- end row -->
+	</div><!-- end container -->
+</div><!-- end section -->
+
+
+
+
+
+
+
+{% endblock %}
